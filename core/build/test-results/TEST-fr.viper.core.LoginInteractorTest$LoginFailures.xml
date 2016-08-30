@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="fr.viper.core.LoginInteractorTest$LoginFailures" tests="2" skipped="0" failures="0" errors="0" timestamp="2016-08-29T16:40:00" hostname="octo-gad.meetic.ilius.net" time="0.014">
+  <properties/>
+  <testcase name="login_WhenPasswordIsInvalid" classname="fr.viper.core.LoginInteractorTest$LoginFailures" time="0.009"/>
+  <testcase name="login_WhenNameIsUnknown" classname="fr.viper.core.LoginInteractorTest$LoginFailures" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[fr.viper.core.LoginGateway$InvalidPasswordException
+fr.viper.core.LoginGateway$UnknownUserException
+]]></system-err>
+</testsuite>
