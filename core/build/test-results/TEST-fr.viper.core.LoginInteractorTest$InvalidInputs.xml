@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="fr.viper.core.LoginInteractorTest$InvalidInputs" tests="2" skipped="0" failures="0" errors="0" timestamp="2016-08-29T16:40:00" hostname="octo-gad.meetic.ilius.net" time="0.003">
-  <properties/>
-  <testcase name="login_WithEmptyPassword" classname="fr.viper.core.LoginInteractorTest$InvalidInputs" time="0.001"/>
-  <testcase name="login_WithEmptyName" classname="fr.viper.core.LoginInteractorTest$InvalidInputs" time="0.001"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

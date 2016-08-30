@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="fr.viper.core.LoginInteractorTest$LoginSuccess" tests="2" skipped="0" failures="0" errors="0" timestamp="2016-08-29T16:40:00" hostname="octo-gad.meetic.ilius.net" time="0.258">
-  <properties/>
-  <testcase name="successfulLogin_GatewayMessage" classname="fr.viper.core.LoginInteractorTest$LoginSuccess" time="0.255"/>
-  <testcase name="successfulLogin_OtherGatewayMessage" classname="fr.viper.core.LoginInteractorTest$LoginSuccess" time="0.002"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
