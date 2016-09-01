@@ -1,8 +1,11 @@
 package fr.viper.app.login;
 
+import android.app.Activity;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import fr.viper.app.R;
@@ -45,6 +48,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
     @Override
     public void displayLoading() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(binding.passwordView.getWindowToken(), 0);
         binding.viewFlipper.setDisplayedChild(DISPLAY_LOADING);
     }
 
