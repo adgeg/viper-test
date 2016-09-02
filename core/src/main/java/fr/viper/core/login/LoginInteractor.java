@@ -1,14 +1,16 @@
 package fr.viper.core.login;
 
-import static fr.viper.core.login.LoginGateway.InvalidPasswordException;
-import static fr.viper.core.login.LoginGateway.UnknownUserException;
+import fr.viper.core.entities.User;
+
+import static fr.viper.core.login.LoginRepository.InvalidPasswordException;
+import static fr.viper.core.login.LoginRepository.UnknownUserException;
 import static fr.viper.core.utils.StringUtils.isEmpty;
 
 public class LoginInteractor {
-    private final LoginGateway gateway;
+    private final LoginRepository gateway;
     private final LoginPresenter presenter;
 
-    public LoginInteractor(LoginGateway gateway, LoginPresenter presenter) {
+    public LoginInteractor(LoginRepository gateway, LoginPresenter presenter) {
         this.gateway = gateway;
         this.presenter = presenter;
     }
@@ -23,17 +25,17 @@ public class LoginInteractor {
 
     private void handleValidCredentials(LoginRequest request) {
         presenter.displayLoading();
-        String loginMessage = null;
+        User user = null;
         try {
-            loginMessage = gateway.checkCredentials(request);
+            user = gateway.getUser(request);
         } catch (UnknownUserException e) {
             handleUnknownUser(e);
         } catch (InvalidPasswordException e) {
             handleInvalidPassword(e);
         }
 
-        if (loginIsSuccessful(loginMessage)) {
-            presenter.displaySuccessfulLogin(new LoginResponse(loginMessage));
+        if (loginIsSuccessful(user)) {
+            presenter.displayLoggedUser(user);
         }
     }
 
@@ -47,8 +49,8 @@ public class LoginInteractor {
         presenter.displayUnknownName();
     }
 
-    private boolean loginIsSuccessful(String loginMessage) {
-        return loginMessage != null;
+    private boolean loginIsSuccessful(User user) {
+        return user != null;
     }
 
     private void handleInvalidCredentials(LoginRequest request) {

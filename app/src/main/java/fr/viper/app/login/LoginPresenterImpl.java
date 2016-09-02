@@ -1,7 +1,7 @@
 package fr.viper.app.login;
 
+import fr.viper.core.entities.User;
 import fr.viper.core.login.LoginPresenter;
-import fr.viper.core.login.LoginResponse;
 
 public class LoginPresenterImpl implements LoginPresenter {
     private final LoginView view;
@@ -36,7 +36,7 @@ public class LoginPresenterImpl implements LoginPresenter {
     }
 
     @Override
-    public void displaySuccessfulLogin(LoginResponse response) {
-        view.displaySuccessfulLogin(response.getMessage());
+    public void displayLoggedUser(User user) {
+        view.displaySuccessfulLogin(null);
     }
 }

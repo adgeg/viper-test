@@ -7,9 +7,10 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
-import fr.viper.core.login.LoginResponse;
+import fr.viper.core.entities.User;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class LoginPresenterTest {
     @Rule public MockitoRule rule = MockitoJUnit.rule();
@@ -49,8 +50,8 @@ public class LoginPresenterTest {
 
     @Test
     public void displaySuccessfulLogin() {
-        final LoginResponse response = new LoginResponse("message");
-        presenter.displaySuccessfulLogin(response);
-        verify(view).displaySuccessfulLogin("message");
+        final User user = mock(User.class);
+        presenter.displayLoggedUser(user);
+        verify(view).displaySuccessfulLogin(user);
     }
 }

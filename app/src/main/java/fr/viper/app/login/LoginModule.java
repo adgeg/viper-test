@@ -2,10 +2,10 @@ package fr.viper.app.login;
 
 import fr.viper.app.ApplicationModule;
 import fr.viper.app.Attachable;
-import fr.viper.core.login.LoginGateway;
 import fr.viper.core.login.LoginInteractor;
 import fr.viper.core.login.LoginPresenter;
-import fr.viper.gateway.MockLoginGateway;
+import fr.viper.core.login.LoginRepository;
+import fr.viper.gateway.MockLoginRepository;
 
 public class LoginModule {
     private final ApplicationModule applicationModule;
@@ -26,8 +26,8 @@ public class LoginModule {
         return viewDecorator;
     }
 
-    private LoginGateway getGateway(){
-        return new MockLoginGateway();
+    private LoginRepository getGateway() {
+        return new MockLoginRepository();
     }
 
     private LoginPresenter getPresenter(){

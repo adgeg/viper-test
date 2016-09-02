@@ -3,6 +3,7 @@ package fr.viper.app.login;
 import java.util.concurrent.Executor;
 
 import fr.viper.app.Attachable;
+import fr.viper.core.entities.User;
 
 public class LoginViewDecorator implements LoginView, Attachable<LoginView> {
     private final Executor executor;
@@ -83,12 +84,12 @@ public class LoginViewDecorator implements LoginView, Attachable<LoginView> {
     }
 
     @Override
-    public void displaySuccessfulLogin(final String message) {
+    public void displaySuccessfulLogin(final User user) {
         executor.execute(new Runnable() {
             @Override
             public void run() {
                 if(loginView != null){
-                    loginView.displaySuccessfulLogin(message);
+                    loginView.displaySuccessfulLogin(user);
                 }
             }
         });
