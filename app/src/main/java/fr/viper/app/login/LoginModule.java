@@ -5,7 +5,7 @@ import fr.viper.app.Attachable;
 import fr.viper.core.login.LoginInteractor;
 import fr.viper.core.login.LoginPresenter;
 import fr.viper.core.login.LoginRepository;
-import fr.viper.gateway.MockLoginRepository;
+import fr.viper.repositories.login.FakeLoginRepository;
 
 public class LoginModule {
     private final ApplicationModule applicationModule;
@@ -17,7 +17,7 @@ public class LoginModule {
     }
 
     public LoginController getController() {
-        final LoginInteractor interactor = new LoginInteractor(getGateway(), getPresenter());
+        final LoginInteractor interactor = new LoginInteractor(getRepository(), getPresenter());
         final LoginControllerImpl controller = new LoginControllerImpl(interactor);
         return new LoginControllerDecorator(controller, applicationModule.getAsyncExecutor());
     }
@@ -26,8 +26,8 @@ public class LoginModule {
         return viewDecorator;
     }
 
-    private LoginRepository getGateway() {
-        return new MockLoginRepository();
+    private LoginRepository getRepository() {
+        return new FakeLoginRepository(applicationModule.getMapperModule().getObjectMapper());
     }
 
     private LoginPresenter getPresenter(){

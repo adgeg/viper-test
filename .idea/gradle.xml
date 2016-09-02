@@ -11,7 +11,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/core" />
-            <option value="$PROJECT_DIR$/gateway" />
+            <option value="$PROJECT_DIR$/repositories" />
           </set>
         </option>
         <option name="myModules">
@@ -19,7 +19,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/core" />
-            <option value="$PROJECT_DIR$/gateway" />
+            <option value="$PROJECT_DIR$/repositories" />
           </set>
         </option>
       </GradleProjectSettings>

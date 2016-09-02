@@ -90,8 +90,7 @@ public class LoginPresenterImplTest {
 
     private User mockUser(int year, int month, int date) {
         final User user = mock(User.class);
-        final GregorianCalendar calendar = new GregorianCalendar();
-        calendar.set(year, month, date);
+        final GregorianCalendar calendar = new GregorianCalendar(year, month, date);
         given(user.getLastLogin()).willReturn(calendar.getTime());
         return user;
     }
