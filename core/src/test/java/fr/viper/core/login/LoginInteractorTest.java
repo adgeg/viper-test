@@ -19,7 +19,7 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(HierarchicalContextRunner.class)
 public class LoginInteractorTest {
-    @Mock private LoginRepository gateway;
+    @Mock private LoginRepository repository;
     @Mock private LoginPresenter presenter;
     @InjectMocks private LoginInteractor interactor;
 
@@ -49,7 +49,7 @@ public class LoginInteractorTest {
         @Test
         public void login_WhenIdIsUnknown() throws Exception {
             final LoginRequest request = new LoginRequest("id", "password");
-            doThrow(UnknownUserException.class).when(gateway).getUser(request);
+            doThrow(UnknownUserException.class).when(repository).getUser(request);
             interactor.login(request);
             verify(presenter).displayLoading();
             verify(presenter).displayUnknownId();
@@ -58,7 +58,7 @@ public class LoginInteractorTest {
         @Test
         public void login_WhenPasswordIsInvalid() throws Exception {
             final LoginRequest request = new LoginRequest("id", "password");
-            doThrow(InvalidPasswordException.class).when(gateway).getUser(request);
+            doThrow(InvalidPasswordException.class).when(repository).getUser(request);
             interactor.login(request);
             verify(presenter).displayLoading();
             verify(presenter).displayInvalidPassword();
@@ -66,16 +66,11 @@ public class LoginInteractorTest {
     }
 
     public class LoginSuccess {
-        @Before
-        public void setup() {
-            MockitoAnnotations.initMocks(this);
-        }
-
         @Test
         public void successfulLogin() throws Exception {
             final LoginRequest request = new LoginRequest("id", "password");
             final User user = mock(User.class);
-            given(gateway.getUser(request)).willReturn(user);
+            given(repository.getUser(request)).willReturn(user);
             interactor.login(request);
             verify(presenter).displayLoading();
             verify(presenter).displayLoggedUser(user);
