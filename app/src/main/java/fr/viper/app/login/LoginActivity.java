@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import fr.viper.app.R;
 import fr.viper.app.databinding.ActivityLoginBinding;
-import fr.viper.core.entities.User;
 
 import static fr.viper.app.ViperApplication.getApplicationModule;
 
@@ -48,8 +47,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
     @Override
     public void displayLoading() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(binding.passwordView.getWindowToken(), 0);
+        hideKeyboard();
         binding.viewFlipper.setDisplayedChild(DISPLAY_LOADING);
     }
 
@@ -66,8 +64,10 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     }
 
     @Override
-    public void displaySuccessfulLogin(User user) {
+    public void displaySuccessfulLogin(UserViewModel viewModel) {
         displayForm();
+        toast(viewModel.getTitle());
+        toast(viewModel.getDescription());
     }
 
     private void toast(String text) {
@@ -78,5 +78,10 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         if (binding.viewFlipper.getDisplayedChild() != DISPLAY_FORM) {
             binding.viewFlipper.setDisplayedChild(DISPLAY_FORM);
         }
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(binding.passwordView.getWindowToken(), 0);
     }
 }

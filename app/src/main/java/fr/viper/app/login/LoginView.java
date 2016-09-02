@@ -1,7 +1,5 @@
 package fr.viper.app.login;
 
-import fr.viper.core.entities.User;
-
 public interface LoginView {
     void displayEmptyPassword();
 
@@ -13,5 +11,5 @@ public interface LoginView {
 
     void displayInvalidPassword();
 
-    void displaySuccessfulLogin(User user);
+    void displaySuccessfulLogin(UserViewModel viewModel);
 }

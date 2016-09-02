@@ -31,6 +31,6 @@ public class LoginModule {
     }
 
     private LoginPresenter getPresenter(){
-        return new LoginPresenterImpl(viewDecorator);
+        return new LoginPresenterImpl(viewDecorator, applicationModule.getContext());
     }
 }
