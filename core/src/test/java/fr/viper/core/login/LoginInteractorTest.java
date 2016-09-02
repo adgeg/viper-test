@@ -16,49 +16,30 @@ import static fr.viper.core.login.LoginGateway.UnknownUserException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
 @RunWith(HierarchicalContextRunner.class)
-public class LoginInteractorImplTest {
-    @Mock private fr.viper.core.login.LoginGateway gateway;
+public class LoginInteractorTest {
+    @Mock private LoginGateway gateway;
     @Mock private LoginPresenter presenter;
-    @InjectMocks private LoginInteractorImpl interactor;
+    @InjectMocks private LoginInteractor interactor;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
     }
 
-    public class LoginWithParameters {
-        @Captor private ArgumentCaptor<fr.viper.core.login.LoginRequest> captor;
-
-        @Before
-        public void setup() {
-            MockitoAnnotations.initMocks(this);
-            interactor = spy(interactor);
-        }
-
-        @Test
-        public void login_ShouldCreateRequest() {
-            interactor.login("name", "password");
-            verify(interactor).login(captor.capture());
-            assertThat(captor.getValue().getName()).isEqualTo("name");
-            assertThat(captor.getValue().getPassword()).isEqualTo("password");
-        }
-    }
-
     public class InvalidInputs {
         @Test
         public void login_WithEmptyName() {
-            final fr.viper.core.login.LoginRequest request = new fr.viper.core.login.LoginRequest("", "");
+            final LoginRequest request = new LoginRequest("", "");
             interactor.login(request);
             verify(presenter).displayEmptyUserName();
         }
 
         @Test
         public void login_WithEmptyPassword() {
-            final fr.viper.core.login.LoginRequest request = new fr.viper.core.login.LoginRequest("name", "");
+            final LoginRequest request = new LoginRequest("name", "");
             interactor.login(request);
             verify(presenter).displayEmptyPassword();
         }
@@ -68,7 +49,7 @@ public class LoginInteractorImplTest {
     public class LoginFailures {
         @Test
         public void login_WhenNameIsUnknown() throws Exception {
-            final fr.viper.core.login.LoginRequest request = new fr.viper.core.login.LoginRequest("name", "password");
+            final LoginRequest request = new LoginRequest("name", "password");
             doThrow(UnknownUserException.class).when(gateway).checkCredentials(request);
             interactor.login(request);
             verify(presenter).displayLoading();
@@ -77,7 +58,7 @@ public class LoginInteractorImplTest {
 
         @Test
         public void login_WhenPasswordIsInvalid() throws Exception {
-            final fr.viper.core.login.LoginRequest request = new fr.viper.core.login.LoginRequest("name", "password");
+            final LoginRequest request = new LoginRequest("name", "password");
             doThrow(InvalidPasswordException.class).when(gateway).checkCredentials(request);
             interactor.login(request);
             verify(presenter).displayLoading();
@@ -96,7 +77,7 @@ public class LoginInteractorImplTest {
 
         @Test
         public void successfulLogin_GatewayMessage() throws Exception {
-            final fr.viper.core.login.LoginRequest request = new fr.viper.core.login.LoginRequest("name", "password");
+            final LoginRequest request = new LoginRequest("name", "password");
             given(gateway.checkCredentials(request)).willReturn("message");
             interactor.login(request);
             verify(presenter).displayLoading();
@@ -106,7 +87,7 @@ public class LoginInteractorImplTest {
 
         @Test
         public void successfulLogin_OtherGatewayMessage() throws Exception {
-            final fr.viper.core.login.LoginRequest request = new LoginRequest("name", "password");
+            final LoginRequest request = new LoginRequest("name", "password");
             given(gateway.checkCredentials(request)).willReturn("other-message");
             interactor.login(request);
             verify(presenter).displayLoading();

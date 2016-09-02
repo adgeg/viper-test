@@ -1,6 +1,5 @@
 package fr.viper.app.login;
 
-import android.app.Activity;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -25,7 +24,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         loginModule = new LoginModule(getApplicationModule(this));
         loginModule.getAttachableView().attach(this);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
-        binding.setInteractor(loginModule.getInteractor());
+        binding.setController(loginModule.getController());
     }
 
     @Override
