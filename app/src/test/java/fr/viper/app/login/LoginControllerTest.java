@@ -27,7 +27,7 @@ public class LoginControllerTest {
         final LoginController controller = new LoginControllerImpl(interactor);
         controller.executeRequest("name", "password");
         verify(interactor).login(captor.capture());
-        assertThat(captor.getValue().getName()).isEqualTo("name");
+        assertThat(captor.getValue().getId()).isEqualTo("name");
         assertThat(captor.getValue().getPassword()).isEqualTo("password");
     }
 }

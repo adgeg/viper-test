@@ -7,6 +7,10 @@
         <variable
             name="controller"
             type="fr.viper.app.login.LoginController"/>
+
+        <variable
+            name="viewModel"
+            type="fr.viper.app.login.UserViewModel"/>
     </data>
 
     <ViewFlipper
@@ -14,15 +18,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:inAnimation="@android:anim/fade_in"
-        android:outAnimation="@android:anim/fade_out">
+        android:outAnimation="@android:anim/fade_out"
+        android:padding="16dp">
 
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="16dp"
             android:useDefaultMargins="true"
-            tools:context=".login.LoginActivity"
-            tools:ignore="HardcodedText">
+            tools:context=".login.LoginActivity">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -38,7 +41,6 @@
                 android:layout_column="1"
                 android:layout_row="0"
                 android:ems="10"
-                android:hint="@string/login_id"
                 android:inputType="textPersonName"/>
 
             <TextView
@@ -55,18 +57,17 @@
                 android:layout_column="1"
                 android:layout_row="1"
                 android:ems="10"
-                android:hint="@string/login_password"
                 android:inputType="textPassword"/>
 
             <Button
-                android:id="@+id/button"
+                style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
                 android:layout_gravity="end"
                 android:layout_row="2"
                 android:onClick="@{()->controller.executeRequest(nameView.text.toString,passwordView.text.toString)}"
-                android:text="@string/login_confirm"/>
+                android:text="@string/login"/>
         </GridLayout>
 
         <ProgressBar
@@ -75,6 +76,37 @@
             android:layout_gravity="center"
             android:indeterminateTint="@color/colorAccent"
             android:indeterminateTintMode="src_in"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.title}"
+                tools:text="Bienvenue Louis CK"/>
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.description}"
+                tools:text="Dernière connexion le 2 septembre"/>
+
+            <Button
+                android:id="@+id/button"
+                style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:onClick="@{()->viewFlipper.setDisplayedChild(0)}"
+                android:text="@string/logout"/>
+
+        </LinearLayout>
+
     </ViewFlipper>
 </layout>
 

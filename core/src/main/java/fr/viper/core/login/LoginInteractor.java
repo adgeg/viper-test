@@ -46,7 +46,7 @@ public class LoginInteractor {
 
     private void handleUnknownUser(UnknownUserException e) {
         e.printStackTrace();
-        presenter.displayUnknownName();
+        presenter.displayUnknownId();
     }
 
     private boolean loginIsSuccessful(User user) {
@@ -54,14 +54,14 @@ public class LoginInteractor {
     }
 
     private void handleInvalidCredentials(LoginRequest request) {
-        if (isEmpty(request.getName())) {
-            presenter.displayEmptyUserName();
+        if (isEmpty(request.getId())) {
+            presenter.displayEmptyId();
         } else if (isEmpty(request.getPassword())) {
             presenter.displayEmptyPassword();
         }
     }
 
     private boolean credentialsAreInvalid(LoginRequest request) {
-        return isEmpty(request.getName()) || isEmpty(request.getPassword());
+        return isEmpty(request.getId()) || isEmpty(request.getPassword());
     }
 }

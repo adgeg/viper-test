@@ -35,12 +35,12 @@ public class LoginViewDecorator implements LoginView, Attachable<LoginView> {
     }
 
     @Override
-    public void displayEmptyUserName() {
+    public void displayEmptyId() {
         executor.execute(new Runnable() {
             @Override
             public void run() {
                 if(loginView != null){
-                    loginView.displayEmptyUserName();
+                    loginView.displayEmptyId();
                 }
             }
         });
@@ -59,12 +59,12 @@ public class LoginViewDecorator implements LoginView, Attachable<LoginView> {
     }
 
     @Override
-    public void displayUnknownName() {
+    public void displayUnknownId() {
         executor.execute(new Runnable() {
             @Override
             public void run() {
                 if(loginView != null){
-                    loginView.displayUnknownName();
+                    loginView.displayUnknownId();
                 }
             }
         });

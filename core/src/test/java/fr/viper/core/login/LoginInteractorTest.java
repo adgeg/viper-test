@@ -30,15 +30,15 @@ public class LoginInteractorTest {
 
     public class InvalidInputs {
         @Test
-        public void login_WithEmptyName() {
+        public void login_WithEmptyId() {
             final LoginRequest request = new LoginRequest("", "");
             interactor.login(request);
-            verify(presenter).displayEmptyUserName();
+            verify(presenter).displayEmptyId();
         }
 
         @Test
         public void login_WithEmptyPassword() {
-            final LoginRequest request = new LoginRequest("name", "");
+            final LoginRequest request = new LoginRequest("id", "");
             interactor.login(request);
             verify(presenter).displayEmptyPassword();
         }
@@ -47,17 +47,17 @@ public class LoginInteractorTest {
 
     public class LoginFailures {
         @Test
-        public void login_WhenNameIsUnknown() throws Exception {
-            final LoginRequest request = new LoginRequest("name", "password");
+        public void login_WhenIdIsUnknown() throws Exception {
+            final LoginRequest request = new LoginRequest("id", "password");
             doThrow(UnknownUserException.class).when(gateway).getUser(request);
             interactor.login(request);
             verify(presenter).displayLoading();
-            verify(presenter).displayUnknownName();
+            verify(presenter).displayUnknownId();
         }
 
         @Test
         public void login_WhenPasswordIsInvalid() throws Exception {
-            final LoginRequest request = new LoginRequest("name", "password");
+            final LoginRequest request = new LoginRequest("id", "password");
             doThrow(InvalidPasswordException.class).when(gateway).getUser(request);
             interactor.login(request);
             verify(presenter).displayLoading();
@@ -72,8 +72,8 @@ public class LoginInteractorTest {
         }
 
         @Test
-        public void successfulLogin_GatewayMessage() throws Exception {
-            final LoginRequest request = new LoginRequest("name", "password");
+        public void successfulLogin() throws Exception {
+            final LoginRequest request = new LoginRequest("id", "password");
             final User user = mock(User.class);
             given(gateway.getUser(request)).willReturn(user);
             interactor.login(request);

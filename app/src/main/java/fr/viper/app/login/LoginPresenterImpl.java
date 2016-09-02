@@ -19,8 +19,8 @@ public class LoginPresenterImpl implements LoginPresenter {
     }
 
     @Override
-    public void displayEmptyUserName() {
-        view.displayEmptyUserName();
+    public void displayEmptyId() {
+        view.displayEmptyId();
     }
 
     @Override
@@ -34,8 +34,8 @@ public class LoginPresenterImpl implements LoginPresenter {
     }
 
     @Override
-    public void displayUnknownName() {
-        view.displayUnknownName();
+    public void displayUnknownId() {
+        view.displayUnknownId();
     }
 
     @Override

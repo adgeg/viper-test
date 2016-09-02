@@ -3,13 +3,13 @@ package fr.viper.core.login;
 import fr.viper.core.entities.User;
 
 public interface LoginPresenter {
-    void displayEmptyUserName();
+    void displayEmptyId();
 
     void displayEmptyPassword();
 
     void displayLoading();
 
-    void displayUnknownName();
+    void displayUnknownId();
 
     void displayInvalidPassword();
 

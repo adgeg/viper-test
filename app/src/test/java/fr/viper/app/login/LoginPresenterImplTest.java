@@ -38,8 +38,8 @@ public class LoginPresenterImplTest {
 
     @Test
     public void displayEmptyUserName() {
-        presenter.displayEmptyUserName();
-        verify(view).displayEmptyUserName();
+        presenter.displayEmptyId();
+        verify(view).displayEmptyId();
     }
 
     @Test
@@ -56,8 +56,8 @@ public class LoginPresenterImplTest {
 
     @Test
     public void displayUnknownName() {
-        presenter.displayUnknownName();
-        verify(view).displayUnknownName();
+        presenter.displayUnknownId();
+        verify(view).displayUnknownId();
     }
 
     @Test

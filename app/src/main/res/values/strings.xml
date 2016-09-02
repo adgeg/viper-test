@@ -1,10 +1,16 @@
 <resources>
-    <string name="app_name">Connexion</string>
+    <string name="app_name">Viper</string>
+
+    <string name="login">Connexion</string>
     <string name="login_id">Indentifiant</string>
     <string name="login_password">Mot de passe</string>
-    <string name="login_confirm">Connexion</string>
+
+    <string name="empty_password">Mot de passe vide</string>
+    <string name="empty_id">Identifiant vide</string>
+    <string name="unknown_id">Identifiant inconnu</string>
+    <string name="invalid_id">Mot de passe incorrect</string>
 
     <string name="welcome">Bienvenue %1s</string>
     <string name="last_login">Dernière connexion le %1s</string>
-    <string name="login_name">Nom</string>
+    <string name="logout">Deconnexion</string>
 </resources>
