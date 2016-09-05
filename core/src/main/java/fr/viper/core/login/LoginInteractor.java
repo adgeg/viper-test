@@ -7,11 +7,11 @@ import static fr.viper.core.login.LoginRepository.UnknownUserException;
 import static fr.viper.core.utils.StringUtils.isEmpty;
 
 public class LoginInteractor {
-    private final LoginRepository gateway;
+    private final LoginRepository repository;
     private final LoginPresenter presenter;
 
-    public LoginInteractor(LoginRepository gateway, LoginPresenter presenter) {
-        this.gateway = gateway;
+    public LoginInteractor(LoginRepository repository, LoginPresenter presenter) {
+        this.repository = repository;
         this.presenter = presenter;
     }
 
@@ -24,10 +24,10 @@ public class LoginInteractor {
     }
 
     private void handleValidCredentials(LoginRequest request) {
-        presenter.displayLoading();
+        presenter.presentPendingRequest();
         User user = null;
         try {
-            user = gateway.getUser(request);
+            user = repository.getUser(request);
         } catch (UnknownUserException e) {
             handleUnknownUser(e);
         } catch (InvalidPasswordException e) {
@@ -35,18 +35,18 @@ public class LoginInteractor {
         }
 
         if (loginIsSuccessful(user)) {
-            presenter.displayLoggedUser(user);
+            presenter.presentLoggedUser(user);
         }
     }
 
     private void handleInvalidPassword(InvalidPasswordException e) {
         e.printStackTrace();
-        presenter.displayInvalidPassword();
+        presenter.presentInvalidPassword();
     }
 
     private void handleUnknownUser(UnknownUserException e) {
         e.printStackTrace();
-        presenter.displayUnknownId();
+        presenter.presentUnknownId();
     }
 
     private boolean loginIsSuccessful(User user) {
@@ -55,9 +55,9 @@ public class LoginInteractor {
 
     private void handleInvalidCredentials(LoginRequest request) {
         if (isEmpty(request.getId())) {
-            presenter.displayEmptyId();
+            presenter.presentEmptyId();
         } else if (isEmpty(request.getPassword())) {
-            presenter.displayEmptyPassword();
+            presenter.presentEmptyPassword();
         }
     }
 

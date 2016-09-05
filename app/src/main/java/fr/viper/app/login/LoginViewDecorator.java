@@ -1,5 +1,7 @@
 package fr.viper.app.login;
 
+import android.support.annotation.StringRes;
+
 import java.util.concurrent.Executor;
 
 import fr.viper.app.Attachable;
@@ -23,30 +25,6 @@ public class LoginViewDecorator implements LoginView, Attachable<LoginView> {
     }
 
     @Override
-    public void displayEmptyPassword() {
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                if(loginView != null){
-                    loginView.displayEmptyPassword();
-                }
-            }
-        });
-    }
-
-    @Override
-    public void displayEmptyId() {
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                if(loginView != null){
-                    loginView.displayEmptyId();
-                }
-            }
-        });
-    }
-
-    @Override
     public void displayLoading() {
         executor.execute(new Runnable() {
             @Override
@@ -59,36 +37,24 @@ public class LoginViewDecorator implements LoginView, Attachable<LoginView> {
     }
 
     @Override
-    public void displayUnknownId() {
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                if(loginView != null){
-                    loginView.displayUnknownId();
-                }
-            }
-        });
-    }
-
-    @Override
-    public void displayInvalidPassword() {
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                if(loginView != null){
-                    loginView.displayInvalidPassword();
-                }
-            }
-        });
-    }
-
-    @Override
     public void displaySuccessfulLogin(final UserViewModel viewModel) {
         executor.execute(new Runnable() {
             @Override
             public void run() {
                 if(loginView != null){
                     loginView.displaySuccessfulLogin(viewModel);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void displayErrorMessage(@StringRes final int messageResId) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                if (loginView != null) {
+                    loginView.displayErrorMessage(messageResId);
                 }
             }
         });

@@ -1,15 +1,11 @@
 package fr.viper.app.login;
 
+import android.support.annotation.StringRes;
+
 public interface LoginView {
-    void displayEmptyPassword();
-
-    void displayEmptyId();
-
     void displayLoading();
 
-    void displayUnknownId();
-
-    void displayInvalidPassword();
+    void displayErrorMessage(@StringRes int messageResId);
 
     void displaySuccessfulLogin(UserViewModel viewModel);
 }

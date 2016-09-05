@@ -33,14 +33,14 @@ public class LoginInteractorTest {
         public void login_WithEmptyId() {
             final LoginRequest request = new LoginRequest("", "");
             interactor.login(request);
-            verify(presenter).displayEmptyId();
+            verify(presenter).presentEmptyId();
         }
 
         @Test
         public void login_WithEmptyPassword() {
             final LoginRequest request = new LoginRequest("id", "");
             interactor.login(request);
-            verify(presenter).displayEmptyPassword();
+            verify(presenter).presentEmptyPassword();
         }
 
     }
@@ -51,8 +51,8 @@ public class LoginInteractorTest {
             final LoginRequest request = new LoginRequest("id", "password");
             doThrow(UnknownUserException.class).when(repository).getUser(request);
             interactor.login(request);
-            verify(presenter).displayLoading();
-            verify(presenter).displayUnknownId();
+            verify(presenter).presentPendingRequest();
+            verify(presenter).presentUnknownId();
         }
 
         @Test
@@ -60,8 +60,8 @@ public class LoginInteractorTest {
             final LoginRequest request = new LoginRequest("id", "password");
             doThrow(InvalidPasswordException.class).when(repository).getUser(request);
             interactor.login(request);
-            verify(presenter).displayLoading();
-            verify(presenter).displayInvalidPassword();
+            verify(presenter).presentPendingRequest();
+            verify(presenter).presentInvalidPassword();
         }
     }
 
@@ -72,8 +72,8 @@ public class LoginInteractorTest {
             final User user = mock(User.class);
             given(repository.getUser(request)).willReturn(user);
             interactor.login(request);
-            verify(presenter).displayLoading();
-            verify(presenter).displayLoggedUser(user);
+            verify(presenter).presentPendingRequest();
+            verify(presenter).presentLoggedUser(user);
         }
     }
 }

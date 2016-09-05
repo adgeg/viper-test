@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import fr.viper.app.BuildConfig;
+import fr.viper.app.R;
 import fr.viper.core.entities.User;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,46 +38,46 @@ public class LoginPresenterImplTest {
     }
 
     @Test
-    public void displayEmptyUserName() {
-        presenter.displayEmptyId();
-        verify(view).displayEmptyId();
+    public void presentEmptyId() {
+        presenter.presentEmptyId();
+        verify(view).displayErrorMessage(R.string.empty_id);
     }
 
     @Test
-    public void displayEmptyPassword() {
-        presenter.displayEmptyPassword();
-        verify(view).displayEmptyPassword();
+    public void presentEmptyPassword() {
+        presenter.presentEmptyPassword();
+        verify(view).displayErrorMessage(R.string.empty_password);
     }
 
     @Test
-    public void displayLoading() {
-        presenter.displayLoading();
+    public void presentPendingRequest() {
+        presenter.presentPendingRequest();
         verify(view).displayLoading();
     }
 
     @Test
-    public void displayUnknownName() {
-        presenter.displayUnknownId();
-        verify(view).displayUnknownId();
+    public void presentUnknownId() {
+        presenter.presentUnknownId();
+        verify(view).displayErrorMessage(R.string.unknown_id);
     }
 
     @Test
-    public void displayInvalidPassword() {
-        presenter.displayInvalidPassword();
-        verify(view).displayInvalidPassword();
+    public void presentInvalidPassword() {
+        presenter.presentInvalidPassword();
+        verify(view).displayErrorMessage(R.string.invalid_password);
     }
 
     @Test
-    public void displayLoggedUser_ShouldDisplayHelloToUser() {
+    public void presentLoggedUser_ShouldDisplayHelloToUser() {
         final User user = mockUser("Louis", "CK");
-        presenter.displayLoggedUser(user);
+        presenter.presentLoggedUser(user);
         assertViewModelTitle("Bienvenue Louis CK");
     }
 
     @Test
-    public void displayLoggedUser_ShouldDisplayLastUserLoginDate() {
+    public void presentLoggedUser_ShouldDisplayLastUserLoginDate() {
         final User user = mockUser(2016, 8, 1);
-        presenter.displayLoggedUser(user);
+        presenter.presentLoggedUser(user);
         assertViewModelDescription("Dernière connexion le 1 septembre 2016");
     }
 

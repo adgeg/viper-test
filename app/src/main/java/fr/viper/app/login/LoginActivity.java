@@ -36,31 +36,9 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     }
 
     @Override
-    public void displayEmptyPassword() {
-        toast(R.string.empty_password);
-    }
-
-    @Override
-    public void displayEmptyId() {
-        toast(R.string.empty_id);
-    }
-
-    @Override
     public void displayLoading() {
         hideKeyboard();
         binding.viewFlipper.setDisplayedChild(DISPLAY_LOADING);
-    }
-
-    @Override
-    public void displayUnknownId() {
-        binding.viewFlipper.setDisplayedChild(DISPLAY_FORM);
-        toast(R.string.unknown_id);
-    }
-
-    @Override
-    public void displayInvalidPassword() {
-        binding.viewFlipper.setDisplayedChild(DISPLAY_FORM);
-        toast(R.string.invalid_id);
     }
 
     @Override
@@ -69,8 +47,16 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         binding.viewFlipper.setDisplayedChild(DISPLAY_SUCCESS);
     }
 
-    private void toast(@StringRes int resId) {
-        Toast.makeText(this, resId, Toast.LENGTH_SHORT).show();
+    @Override
+    public void displayErrorMessage(@StringRes int messageResId) {
+        displayForm();
+        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
+    }
+
+    private void displayForm() {
+        if (binding.viewFlipper.getDisplayedChild() != DISPLAY_FORM) {
+            binding.viewFlipper.setDisplayedChild(DISPLAY_FORM);
+        }
     }
 
     private void hideKeyboard() {

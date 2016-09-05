@@ -19,32 +19,32 @@ public class LoginPresenterImpl implements LoginPresenter {
     }
 
     @Override
-    public void displayEmptyId() {
-        view.displayEmptyId();
+    public void presentEmptyId() {
+        view.displayErrorMessage(R.string.empty_id);
     }
 
     @Override
-    public void displayEmptyPassword() {
-        view.displayEmptyPassword();
+    public void presentEmptyPassword() {
+        view.displayErrorMessage(R.string.empty_password);
     }
 
     @Override
-    public void displayLoading() {
+    public void presentPendingRequest() {
         view.displayLoading();
     }
 
     @Override
-    public void displayUnknownId() {
-        view.displayUnknownId();
+    public void presentUnknownId() {
+        view.displayErrorMessage(R.string.unknown_id);
     }
 
     @Override
-    public void displayInvalidPassword() {
-        view.displayInvalidPassword();
+    public void presentInvalidPassword() {
+        view.displayErrorMessage(R.string.invalid_password);
     }
 
     @Override
-    public void displayLoggedUser(User user) {
+    public void presentLoggedUser(User user) {
         final String title = getViewModelTitle(user);
         final String description = getViewModelDescription(user);
         final UserViewModel viewModel = new UserViewModel(title, description);
