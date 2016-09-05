@@ -10,7 +10,6 @@ import fr.viper.core.login.LoginRequest;
 import fr.viper.model.JsonUser;
 
 public class FakeLoginRepository implements LoginRepository {
-    private static final int DELAY = 2000;
     private static final String UNKNOWN = "unknown";
     private static final String INVALID = "invalid";
 
@@ -22,7 +21,6 @@ public class FakeLoginRepository implements LoginRepository {
 
     @Override
     public User getUser(final LoginRequest request) throws UnknownUserException, InvalidPasswordException {
-        simulateDelay();
         assertKnownUser(request);
         assertValidPassword(request);
         return loadUserFromResource();
@@ -47,14 +45,6 @@ public class FakeLoginRepository implements LoginRepository {
     private void assertKnownUser(LoginRequest request) throws UnknownUserException {
         if (UNKNOWN.equalsIgnoreCase(request.getId())) {
             throw new UnknownUserException();
-        }
-    }
-
-    private void simulateDelay() {
-        try {
-            Thread.sleep(DELAY);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 }
