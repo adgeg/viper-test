@@ -1,4 +1,4 @@
-package fr.viper.app.login;
+package fr.viper.app.login.controller;
 
 import fr.viper.core.login.LoginInteractor;
 import fr.viper.core.login.LoginRequest;

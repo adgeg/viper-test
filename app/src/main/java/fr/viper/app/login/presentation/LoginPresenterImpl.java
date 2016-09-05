@@ -1,4 +1,4 @@
-package fr.viper.app.login;
+package fr.viper.app.login.presentation;
 
 import android.content.Context;
 import android.text.format.DateUtils;

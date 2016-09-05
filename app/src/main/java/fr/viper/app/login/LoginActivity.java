@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import fr.viper.app.R;
 import fr.viper.app.databinding.ActivityLoginBinding;
+import fr.viper.app.login.presentation.LoginView;
+import fr.viper.app.login.presentation.UserViewModel;
 
 import static fr.viper.app.ViperApplication.getApplicationModule;
 

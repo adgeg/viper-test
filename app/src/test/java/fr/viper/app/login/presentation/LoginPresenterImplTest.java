@@ -1,4 +1,4 @@
-package fr.viper.app.login;
+package fr.viper.app.login.presentation;
 
 import org.junit.Before;
 import org.junit.Rule;

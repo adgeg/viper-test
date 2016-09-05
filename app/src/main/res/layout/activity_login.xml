@@ -6,11 +6,11 @@
 
         <variable
             name="controller"
-            type="fr.viper.app.login.LoginController"/>
+            type="fr.viper.app.login.controller.LoginController"/>
 
         <variable
             name="viewModel"
-            type="fr.viper.app.login.UserViewModel"/>
+            type="fr.viper.app.login.presentation.UserViewModel"/>
     </data>
 
     <ViewFlipper

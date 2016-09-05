@@ -4,6 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.viper.app.ApplicationModule;
 import fr.viper.app.Attachable;
+import fr.viper.app.login.controller.LoginController;
+import fr.viper.app.login.controller.LoginControllerDecorator;
+import fr.viper.app.login.controller.LoginControllerImpl;
+import fr.viper.app.login.presentation.LoginPresenterImpl;
+import fr.viper.app.login.presentation.LoginView;
+import fr.viper.app.login.presentation.LoginViewDecorator;
 import fr.viper.core.login.LoginInteractor;
 import fr.viper.core.login.LoginPresenter;
 import fr.viper.core.login.LoginRepository;
