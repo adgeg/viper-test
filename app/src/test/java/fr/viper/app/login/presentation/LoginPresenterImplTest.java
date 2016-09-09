@@ -1,12 +1,11 @@
 package fr.viper.app.login.presentation;
 
-import android.support.annotation.StringRes;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
@@ -35,6 +34,7 @@ public class LoginPresenterImplTest {
     @Rule public MockitoRule rule = MockitoJUnit.rule();
 
     @Mock private LoginView view;
+    @Captor private ArgumentCaptor<LoginViewModel> captor;
     private LoginPresenterImpl presenter;
 
     @Before
@@ -45,50 +45,57 @@ public class LoginPresenterImplTest {
     @Test
     public void presentEmptyId() {
         presenter.presentEmptyId();
-        assertErrorMessage(R.string.empty_id);
+        verify(view).displayViewModel(captor.capture());
+        assertThat(captor.getValue().errorResId).isEqualTo(R.string.empty_id);
     }
 
     @Test
     public void presentEmptyPassword() {
         presenter.presentEmptyPassword();
-        assertErrorMessage(R.string.empty_password);
+        verify(view).displayViewModel(captor.capture());
+        assertThat(captor.getValue().errorResId).isEqualTo(R.string.empty_password);
     }
 
     @Test
     public void presentPendingRequest() {
         presenter.presentPendingRequest();
-        assertShouldHideKeyBoard();
-        assertDisplayedChild(DISPLAY_LOADING);
+        verify(view).displayViewModel(captor.capture());
+        assertThat(captor.getValue().shouldHideKeyboard).isTrue();
+        assertThat(captor.getValue().displayedChild).isEqualTo(DISPLAY_LOADING);
     }
 
     @Test
     public void presentUnknownId() {
         presenter.presentUnknownId();
-        assertErrorMessage(R.string.unknown_id);
-        assertDisplayedChild(DISPLAY_FORM);
+        verify(view).displayViewModel(captor.capture());
+        assertThat(captor.getValue().errorResId).isEqualTo(R.string.unknown_id);
+        assertThat(captor.getValue().displayedChild).isEqualTo(DISPLAY_FORM);
     }
 
     @Test
     public void presentInvalidPassword() {
         presenter.presentInvalidPassword();
-        assertErrorMessage(R.string.invalid_password);
-        assertDisplayedChild(DISPLAY_FORM);
+        verify(view).displayViewModel(captor.capture());
+        assertThat(captor.getValue().errorResId).isEqualTo(R.string.invalid_password);
+        assertThat(captor.getValue().displayedChild).isEqualTo(DISPLAY_FORM);
     }
 
     @Test
     public void presentLoggedUser_ShouldDisplayHelloToUser() {
         final User user = mockUser("Louis", "CK");
         presenter.presentLoggedUser(user);
-        assertTitle("Bienvenue Louis CK");
-        assertDisplayedChild(DISPLAY_SUCCESS);
+        verify(view).displayViewModel(captor.capture());
+        assertThat(captor.getValue().title).isEqualTo("Bienvenue Louis CK");
+        assertThat(captor.getValue().displayedChild).isEqualTo(DISPLAY_SUCCESS);
     }
 
     @Test
     public void presentLoggedUser_ShouldDisplayLastUserLoginDate() {
-        final User user = mockUser(2016, 8, 1);
+        final User user = mockUserWithLastLogin(2016, 8, 1);
         presenter.presentLoggedUser(user);
-        assertDescription("Dernière connexion le 1 septembre 2016");
-        assertDisplayedChild(DISPLAY_SUCCESS);
+        verify(view).displayViewModel(captor.capture());
+        assertThat(captor.getValue().description).isEqualTo("Dernière connexion le 1 septembre 2016");
+        assertThat(captor.getValue().displayedChild).isEqualTo(DISPLAY_SUCCESS);
     }
 
     private User mockUser(String firstName, String lastName) {
@@ -99,40 +106,10 @@ public class LoginPresenterImplTest {
         return user;
     }
 
-    private User mockUser(int year, int month, int date) {
+    private User mockUserWithLastLogin(int year, int month, int date) {
         final User user = mock(User.class);
         final GregorianCalendar calendar = new GregorianCalendar(year, month, date);
         given(user.getLastLogin()).willReturn(calendar.getTime());
         return user;
-    }
-
-    private void assertErrorMessage(@StringRes int expected) {
-        final ArgumentCaptor<LoginViewModel> captor = ArgumentCaptor.forClass(LoginViewModel.class);
-        verify(view).displayViewModel(captor.capture());
-        assertThat(captor.getValue().errorResId).isEqualTo(expected);
-    }
-
-    private void assertTitle(String expected) {
-        final ArgumentCaptor<LoginViewModel> captor = ArgumentCaptor.forClass(LoginViewModel.class);
-        verify(view).displayViewModel(captor.capture());
-        assertThat(captor.getValue().title).isEqualTo(expected);
-    }
-
-    private void assertDescription(String expected) {
-        final ArgumentCaptor<LoginViewModel> captor = ArgumentCaptor.forClass(LoginViewModel.class);
-        verify(view).displayViewModel(captor.capture());
-        assertThat(captor.getValue().description).isEqualTo(expected);
-    }
-
-    private void assertDisplayedChild(int expected) {
-        final ArgumentCaptor<LoginViewModel> captor = ArgumentCaptor.forClass(LoginViewModel.class);
-        verify(view).displayViewModel(captor.capture());
-        assertThat(captor.getValue().displayedChild).isEqualTo(expected);
-    }
-
-    private void assertShouldHideKeyBoard() {
-        final ArgumentCaptor<LoginViewModel> captor = ArgumentCaptor.forClass(LoginViewModel.class);
-        verify(view).displayViewModel(captor.capture());
-        assertThat(captor.getValue().shouldHideKeyboard).isTrue();
     }
 }
