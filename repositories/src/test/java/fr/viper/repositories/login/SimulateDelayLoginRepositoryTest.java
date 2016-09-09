@@ -13,7 +13,12 @@ public class SimulateDelayLoginRepositoryTest {
     public void getUser_ShouldTriggerMethodOnDecoratedRepository() throws LoginRepository.InvalidPasswordException, LoginRepository.UnknownUserException {
         final LoginRequest loginRequest = new LoginRequest("id", "password");
         final LoginRepository decorated = mock(LoginRepository.class);
-        final SimulateDelayLoginRepository repository = new SimulateDelayLoginRepository(decorated);
+        final SimulateDelayLoginRepository repository = new SimulateDelayLoginRepository(decorated) {
+            @Override
+            protected void simulateDelay() {
+
+            }
+        };
         repository.getUser(loginRequest);
         verify(decorated).getUser(loginRequest);
     }
