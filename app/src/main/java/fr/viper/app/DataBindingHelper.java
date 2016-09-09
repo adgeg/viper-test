@@ -15,14 +15,14 @@ public class DataBindingHelper {
 
     }
 
-    @BindingAdapter("displayedChild")
+    @BindingAdapter("bind:displayedChild")
     public static void setDisplayedChild(ViewFlipper viewFlipper, int whichChild) {
         if (viewFlipper.getDisplayedChild() != whichChild) {
             viewFlipper.setDisplayedChild(whichChild);
         }
     }
 
-    @BindingAdapter("shouldHideKeyboard")
+    @BindingAdapter("bind:shouldHideKeyboard")
     public static void shouldHideKeyboard(View view, boolean shouldHideKeyboard) {
         if (shouldHideKeyboard) {
             InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(INPUT_METHOD_SERVICE);
@@ -30,7 +30,7 @@ public class DataBindingHelper {
         }
     }
 
-    @BindingAdapter("toast")
+    @BindingAdapter("bind:toast")
     public static void toast(View view, @StringRes int resId) {
         if (resId != 0) {
             Toast.makeText(view.getContext(), resId, Toast.LENGTH_SHORT).show();

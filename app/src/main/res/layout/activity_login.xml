@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -21,9 +21,9 @@
         android:inAnimation="@android:anim/fade_in"
         android:outAnimation="@android:anim/fade_out"
         android:padding="16dp"
-        app:displayedChild="@{viewModel.displayedChild}"
-        app:shouldHideKeyboard="@{viewModel.shouldHideKeyboard}"
-        app:toast="@{viewModel.errorResId}">
+        bind:displayedChild="@{viewModel.displayedChild}"
+        bind:shouldHideKeyboard="@{viewModel.shouldHideKeyboard}"
+        bind:toast="@{viewModel.errorResId}">
 
         <GridLayout
             android:layout_width="match_parent"
