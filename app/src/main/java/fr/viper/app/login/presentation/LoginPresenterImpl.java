@@ -8,6 +8,9 @@ import fr.viper.core.entities.User;
 import fr.viper.core.login.LoginPresenter;
 
 import static android.text.format.DateUtils.formatDateTime;
+import static fr.viper.app.login.presentation.LoginViewModel.DISPLAY_FORM;
+import static fr.viper.app.login.presentation.LoginViewModel.DISPLAY_LOADING;
+import static fr.viper.app.login.presentation.LoginViewModel.DISPLAY_SUCCESS;
 
 public class LoginPresenterImpl implements LoginPresenter {
     private final LoginView view;
@@ -20,35 +23,49 @@ public class LoginPresenterImpl implements LoginPresenter {
 
     @Override
     public void presentEmptyId() {
-        view.displayErrorMessage(R.string.empty_id);
+        final LoginViewModel viewModel = new LoginViewModel();
+        viewModel.errorResId = R.string.empty_id;
+        view.displayViewModel(viewModel);
     }
 
     @Override
     public void presentEmptyPassword() {
-        view.displayErrorMessage(R.string.empty_password);
+        final LoginViewModel viewModel = new LoginViewModel();
+        viewModel.errorResId = R.string.empty_password;
+        view.displayViewModel(viewModel);
     }
 
     @Override
     public void presentPendingRequest() {
-        view.displayLoading();
+        final LoginViewModel viewModel = new LoginViewModel();
+        viewModel.displayedChild = DISPLAY_LOADING;
+        viewModel.shouldHideKeyboard = true;
+        view.displayViewModel(viewModel);
     }
 
     @Override
     public void presentUnknownId() {
-        view.displayErrorMessage(R.string.unknown_id);
+        final LoginViewModel viewModel = new LoginViewModel();
+        viewModel.errorResId = R.string.unknown_id;
+        viewModel.displayedChild = DISPLAY_FORM;
+        view.displayViewModel(viewModel);
     }
 
     @Override
     public void presentInvalidPassword() {
-        view.displayErrorMessage(R.string.invalid_password);
+        final LoginViewModel viewModel = new LoginViewModel();
+        viewModel.errorResId = R.string.invalid_password;
+        viewModel.displayedChild = DISPLAY_FORM;
+        view.displayViewModel(viewModel);
     }
 
     @Override
     public void presentLoggedUser(User user) {
-        final String title = getViewModelTitle(user);
-        final String description = getViewModelDescription(user);
-        final UserViewModel viewModel = new UserViewModel(title, description);
-        view.displaySuccessfulLogin(viewModel);
+        final LoginViewModel viewModel = new LoginViewModel();
+        viewModel.displayedChild = DISPLAY_SUCCESS;
+        viewModel.title = getViewModelTitle(user);
+        viewModel.description = getViewModelDescription(user);
+        view.displayViewModel(viewModel);
     }
 
     private String getViewModelDescription(User user) {

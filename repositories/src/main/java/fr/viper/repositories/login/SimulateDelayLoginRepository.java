@@ -5,7 +5,7 @@ import fr.viper.core.login.LoginRepository;
 import fr.viper.core.login.LoginRequest;
 
 public class SimulateDelayLoginRepository implements LoginRepository {
-    private static final int DELAY = 2000;
+    private static final int DELAY = 4000;
     private final LoginRepository repository;
 
     public SimulateDelayLoginRepository(LoginRepository repository) {
@@ -18,7 +18,7 @@ public class SimulateDelayLoginRepository implements LoginRepository {
         return repository.getUser(request);
     }
 
-    private void simulateDelay() {
+    protected void simulateDelay() {
         try {
             Thread.sleep(DELAY);
         } catch (InterruptedException e) {

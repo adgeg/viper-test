@@ -5,6 +5,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
@@ -19,6 +20,9 @@ import fr.viper.app.BuildConfig;
 import fr.viper.app.R;
 import fr.viper.core.entities.User;
 
+import static fr.viper.app.login.presentation.LoginViewModel.DISPLAY_FORM;
+import static fr.viper.app.login.presentation.LoginViewModel.DISPLAY_LOADING;
+import static fr.viper.app.login.presentation.LoginViewModel.DISPLAY_SUCCESS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -30,6 +34,7 @@ public class LoginPresenterImplTest {
     @Rule public MockitoRule rule = MockitoJUnit.rule();
 
     @Mock private LoginView view;
+    @Captor private ArgumentCaptor<LoginViewModel> captor;
     private LoginPresenterImpl presenter;
 
     @Before
@@ -40,45 +45,57 @@ public class LoginPresenterImplTest {
     @Test
     public void presentEmptyId() {
         presenter.presentEmptyId();
-        verify(view).displayErrorMessage(R.string.empty_id);
+        verify(view).displayViewModel(captor.capture());
+        assertThat(captor.getValue().errorResId).isEqualTo(R.string.empty_id);
     }
 
     @Test
     public void presentEmptyPassword() {
         presenter.presentEmptyPassword();
-        verify(view).displayErrorMessage(R.string.empty_password);
+        verify(view).displayViewModel(captor.capture());
+        assertThat(captor.getValue().errorResId).isEqualTo(R.string.empty_password);
     }
 
     @Test
     public void presentPendingRequest() {
         presenter.presentPendingRequest();
-        verify(view).displayLoading();
+        verify(view).displayViewModel(captor.capture());
+        assertThat(captor.getValue().shouldHideKeyboard).isTrue();
+        assertThat(captor.getValue().displayedChild).isEqualTo(DISPLAY_LOADING);
     }
 
     @Test
     public void presentUnknownId() {
         presenter.presentUnknownId();
-        verify(view).displayErrorMessage(R.string.unknown_id);
+        verify(view).displayViewModel(captor.capture());
+        assertThat(captor.getValue().errorResId).isEqualTo(R.string.unknown_id);
+        assertThat(captor.getValue().displayedChild).isEqualTo(DISPLAY_FORM);
     }
 
     @Test
     public void presentInvalidPassword() {
         presenter.presentInvalidPassword();
-        verify(view).displayErrorMessage(R.string.invalid_password);
+        verify(view).displayViewModel(captor.capture());
+        assertThat(captor.getValue().errorResId).isEqualTo(R.string.invalid_password);
+        assertThat(captor.getValue().displayedChild).isEqualTo(DISPLAY_FORM);
     }
 
     @Test
     public void presentLoggedUser_ShouldDisplayHelloToUser() {
         final User user = mockUser("Louis", "CK");
         presenter.presentLoggedUser(user);
-        assertViewModelTitle("Bienvenue Louis CK");
+        verify(view).displayViewModel(captor.capture());
+        assertThat(captor.getValue().title).isEqualTo("Bienvenue Louis CK");
+        assertThat(captor.getValue().displayedChild).isEqualTo(DISPLAY_SUCCESS);
     }
 
     @Test
     public void presentLoggedUser_ShouldDisplayLastUserLoginDate() {
-        final User user = mockUser(2016, 8, 1);
+        final User user = mockUserWithLastLogin(2016, 8, 1);
         presenter.presentLoggedUser(user);
-        assertViewModelDescription("Dernière connexion le 1 septembre 2016");
+        verify(view).displayViewModel(captor.capture());
+        assertThat(captor.getValue().description).isEqualTo("Dernière connexion le 1 septembre 2016");
+        assertThat(captor.getValue().displayedChild).isEqualTo(DISPLAY_SUCCESS);
     }
 
     private User mockUser(String firstName, String lastName) {
@@ -89,22 +106,10 @@ public class LoginPresenterImplTest {
         return user;
     }
 
-    private User mockUser(int year, int month, int date) {
+    private User mockUserWithLastLogin(int year, int month, int date) {
         final User user = mock(User.class);
         final GregorianCalendar calendar = new GregorianCalendar(year, month, date);
         given(user.getLastLogin()).willReturn(calendar.getTime());
         return user;
-    }
-
-    private void assertViewModelTitle(String expected) {
-        final ArgumentCaptor<UserViewModel> captor = ArgumentCaptor.forClass(UserViewModel.class);
-        verify(view).displaySuccessfulLogin(captor.capture());
-        assertThat(captor.getValue().getTitle()).isEqualTo(expected);
-    }
-
-    private void assertViewModelDescription(String expected) {
-        final ArgumentCaptor<UserViewModel> captor = ArgumentCaptor.forClass(UserViewModel.class);
-        verify(view).displaySuccessfulLogin(captor.capture());
-        assertThat(captor.getValue().getDescription()).isEqualTo(expected);
     }
 }
