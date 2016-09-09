@@ -2,7 +2,7 @@
     <string name="app_name">Viper</string>
 
     <string name="login">Connexion</string>
-    <string name="login_id">Indentifiant</string>
+    <string name="login_id">Identifiant</string>
     <string name="login_password">Mot de passe</string>
 
     <string name="empty_password">Mot de passe vide</string>
