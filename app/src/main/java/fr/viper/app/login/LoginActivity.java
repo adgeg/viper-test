@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import fr.viper.app.R;
 import fr.viper.app.databinding.ActivityLoginBinding;
-import fr.viper.app.login.presentation.LoginView;
-import fr.viper.app.login.presentation.LoginViewModel;
+import fr.viper.login.presentation.LoginView;
+import fr.viper.login.presentation.LoginViewModel;
 
 import static fr.viper.app.ViperApplication.getApplicationModule;
 

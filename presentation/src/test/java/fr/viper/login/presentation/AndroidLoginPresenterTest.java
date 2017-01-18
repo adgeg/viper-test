@@ -1,4 +1,4 @@
-package fr.viper.app.login.presentation;
+package fr.viper.login.presentation;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -16,13 +16,11 @@ import org.robolectric.annotation.Config;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import fr.viper.app.BuildConfig;
-import fr.viper.app.R;
 import fr.viper.core.entities.User;
 
-import static fr.viper.app.login.presentation.LoginViewModel.DISPLAY_FORM;
-import static fr.viper.app.login.presentation.LoginViewModel.DISPLAY_LOADING;
-import static fr.viper.app.login.presentation.LoginViewModel.DISPLAY_SUCCESS;
+import static fr.viper.login.presentation.LoginViewModel.DISPLAY_FORM;
+import static fr.viper.login.presentation.LoginViewModel.DISPLAY_LOADING;
+import static fr.viper.login.presentation.LoginViewModel.DISPLAY_SUCCESS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -30,16 +28,16 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 23)
-public class LoginPresenterImplTest {
+public class AndroidLoginPresenterTest {
     @Rule public MockitoRule rule = MockitoJUnit.rule();
 
     @Mock private LoginView view;
     @Captor private ArgumentCaptor<LoginViewModel> captor;
-    private LoginPresenterImpl presenter;
+    private AndroidLoginPresenter presenter;
 
     @Before
     public void setup() {
-        presenter = new LoginPresenterImpl(view, RuntimeEnvironment.application);
+        presenter = new AndroidLoginPresenter(view, RuntimeEnvironment.application);
     }
 
     @Test

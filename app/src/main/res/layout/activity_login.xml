@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="fr.viper.app.login.presentation.LoginViewModel"/>
+            type="fr.viper.login.presentation.LoginViewModel"/>
     </data>
 
     <ViewFlipper

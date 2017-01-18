@@ -1,4 +1,4 @@
-package fr.viper.app.login.presentation;
+package fr.viper.login.presentation;
 
 import android.support.annotation.StringRes;
 

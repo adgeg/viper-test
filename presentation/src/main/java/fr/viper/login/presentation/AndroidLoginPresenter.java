@@ -1,22 +1,21 @@
-package fr.viper.app.login.presentation;
+package fr.viper.login.presentation;
 
 import android.content.Context;
 import android.text.format.DateUtils;
 
-import fr.viper.app.R;
 import fr.viper.core.entities.User;
 import fr.viper.core.login.LoginPresenter;
 
 import static android.text.format.DateUtils.formatDateTime;
-import static fr.viper.app.login.presentation.LoginViewModel.DISPLAY_FORM;
-import static fr.viper.app.login.presentation.LoginViewModel.DISPLAY_LOADING;
-import static fr.viper.app.login.presentation.LoginViewModel.DISPLAY_SUCCESS;
+import static fr.viper.login.presentation.LoginViewModel.DISPLAY_FORM;
+import static fr.viper.login.presentation.LoginViewModel.DISPLAY_LOADING;
+import static fr.viper.login.presentation.LoginViewModel.DISPLAY_SUCCESS;
 
-public class LoginPresenterImpl implements LoginPresenter {
+public class AndroidLoginPresenter implements LoginPresenter {
     private final LoginView view;
     private final Context context;
 
-    public LoginPresenterImpl(LoginView view, Context context) {
+    public AndroidLoginPresenter(LoginView view, Context context) {
         this.view = view;
         this.context = context;
     }

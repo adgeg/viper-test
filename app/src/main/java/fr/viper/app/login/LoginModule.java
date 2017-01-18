@@ -6,11 +6,11 @@ import fr.viper.app.ApplicationModule;
 import fr.viper.app.login.controller.LoginController;
 import fr.viper.app.login.controller.LoginControllerDecorator;
 import fr.viper.app.login.controller.LoginControllerImpl;
-import fr.viper.app.login.presentation.LoginPresenterImpl;
-import fr.viper.app.login.presentation.LoginView;
 import fr.viper.core.login.LoginInteractor;
 import fr.viper.core.login.LoginPresenter;
 import fr.viper.core.login.LoginRepository;
+import fr.viper.login.presentation.AndroidLoginPresenter;
+import fr.viper.login.presentation.LoginView;
 import fr.viper.repositories.login.FakeLoginRepository;
 import fr.viper.repositories.login.SimulateDelayLoginRepository;
 
@@ -36,6 +36,6 @@ public class LoginModule {
     }
 
     private LoginPresenter getPresenter(){
-        return new LoginPresenterImpl(view, applicationModule.getContext());
+        return new AndroidLoginPresenter(view, applicationModule.getContext());
     }
 }

@@ -1,0 +1,14 @@
+<resources>
+    <string name="login">Connexion</string>
+    <string name="login_id">Identifiant</string>
+    <string name="login_password">Mot de passe</string>
+
+    <string name="empty_password">Mot de passe vide</string>
+    <string name="empty_id">Identifiant vide</string>
+    <string name="unknown_id">Identifiant inconnu</string>
+    <string name="invalid_password">Mot de passe incorrect</string>
+
+    <string name="welcome">Bienvenue %1s</string>
+    <string name="last_login">Dernière connexion le %1s</string>
+    <string name="logout">Deconnexion</string>
+</resources>
