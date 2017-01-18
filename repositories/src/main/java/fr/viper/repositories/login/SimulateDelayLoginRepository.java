@@ -5,7 +5,7 @@ import fr.viper.core.login.LoginRepository;
 import fr.viper.core.login.LoginRequest;
 
 public class SimulateDelayLoginRepository implements LoginRepository {
-    private static final int DELAY = 4000;
+    private static final int DELAY = 2000;
     private final LoginRepository repository;
 
     public SimulateDelayLoginRepository(LoginRepository repository) {

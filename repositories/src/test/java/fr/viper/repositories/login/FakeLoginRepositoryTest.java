@@ -3,13 +3,12 @@ package fr.viper.repositories.login;
 import org.junit.Before;
 import org.junit.Test;
 
-import fr.viper.MapperModule;
 import fr.viper.core.entities.User;
 import fr.viper.core.login.LoginRequest;
+import fr.viper.repositories.MapperModule;
 
 import static fr.viper.core.login.LoginRepository.InvalidPasswordException;
 import static fr.viper.core.login.LoginRepository.UnknownUserException;
-import static fr.viper.utils.AssertDate.assertSameHour;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class FakeLoginRepositoryTest {
@@ -38,6 +37,6 @@ public class FakeLoginRepositoryTest {
         final User user = repository.getUser(request);
         assertThat(user.getFirstName()).isEqualTo("Louis");
         assertThat(user.getLastName()).isEqualTo("CK");
-        assertSameHour(user.getLastLogin(), 2016, 8, 1, 12);
+        assertThat(user.getLastLogin()).isEqualTo("2016-09-01T12:35:14");
     }
 }

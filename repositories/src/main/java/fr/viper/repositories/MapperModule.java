@@ -1,4 +1,4 @@
-package fr.viper;
+package fr.viper.repositories;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

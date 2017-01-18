@@ -7,7 +7,6 @@ import java.io.IOException;
 import fr.viper.core.entities.User;
 import fr.viper.core.login.LoginRepository;
 import fr.viper.core.login.LoginRequest;
-import fr.viper.model.JsonUser;
 
 public class FakeLoginRepository implements LoginRepository {
     private static final String UNKNOWN = "unknown";

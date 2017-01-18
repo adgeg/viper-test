@@ -5,7 +5,7 @@ import android.content.Context;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import fr.viper.MapperModule;
+import fr.viper.repositories.MapperModule;
 
 public class ApplicationModule {
     private final Context context;
