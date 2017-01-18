@@ -18,7 +18,7 @@ public class SimulateDelayLoginRepository implements LoginRepository {
         return repository.getUser(request);
     }
 
-    protected void simulateDelay() {
+    private void simulateDelay() {
         try {
             Thread.sleep(DELAY);
         } catch (InterruptedException e) {
