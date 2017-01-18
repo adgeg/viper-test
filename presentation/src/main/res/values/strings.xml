@@ -1,8 +1,4 @@
 <resources>
-    <string name="login">Connexion</string>
-    <string name="login_id">Identifiant</string>
-    <string name="login_password">Mot de passe</string>
-
     <string name="empty_password">Mot de passe vide</string>
     <string name="empty_id">Identifiant vide</string>
     <string name="unknown_id">Identifiant inconnu</string>

@@ -1,7 +1,6 @@
 package fr.viper.app;
 
 import android.databinding.BindingAdapter;
-import android.support.annotation.StringRes;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -15,10 +14,25 @@ public class DataBindingHelper {
 
     }
 
-    @BindingAdapter("bind:displayedChild")
-    public static void setDisplayedChild(ViewFlipper viewFlipper, int whichChild) {
-        if (viewFlipper.getDisplayedChild() != whichChild) {
-            viewFlipper.setDisplayedChild(whichChild);
+    @BindingAdapter("bind:displayed")
+    public static void setDisplayed(View view, boolean displayed) {
+        if (!displayed) {
+            return;
+        }
+        if (!(view.getParent() instanceof ViewFlipper)) {
+            return;
+        }
+
+        ViewFlipper viewFlipper = (ViewFlipper) view.getParent();
+        if (viewFlipper.getCurrentView() == view) {
+            return;
+        }
+
+        for (int i = 0; i < viewFlipper.getChildCount(); i++) {
+            if (viewFlipper.getChildAt(i) == view) {
+                viewFlipper.setDisplayedChild(i);
+                return;
+            }
         }
     }
 
@@ -31,9 +45,9 @@ public class DataBindingHelper {
     }
 
     @BindingAdapter("bind:toast")
-    public static void toast(View view, @StringRes int resId) {
-        if (resId != 0) {
-            Toast.makeText(view.getContext(), resId, Toast.LENGTH_SHORT).show();
+    public static void toast(View view, String toast) {
+        if (toast != null) {
+            Toast.makeText(view.getContext(), toast, Toast.LENGTH_SHORT).show();
         }
     }
 }

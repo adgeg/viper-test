@@ -18,16 +18,13 @@ import java.util.GregorianCalendar;
 
 import fr.viper.core.entities.User;
 
-import static fr.viper.login.presentation.LoginViewModel.DISPLAY_FORM;
-import static fr.viper.login.presentation.LoginViewModel.DISPLAY_LOADING;
-import static fr.viper.login.presentation.LoginViewModel.DISPLAY_SUCCESS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 23)
+@Config(constants = BuildConfig.class)
 public class AndroidLoginPresenterTest {
     @Rule public MockitoRule rule = MockitoJUnit.rule();
 
@@ -44,38 +41,37 @@ public class AndroidLoginPresenterTest {
     public void presentEmptyId() {
         presenter.presentEmptyId();
         verify(view).displayViewModel(captor.capture());
-        assertThat(captor.getValue().errorResId).isEqualTo(R.string.empty_id);
+        assertThat(captor.getValue().error).isEqualTo("Identifiant vide");
     }
 
     @Test
     public void presentEmptyPassword() {
         presenter.presentEmptyPassword();
         verify(view).displayViewModel(captor.capture());
-        assertThat(captor.getValue().errorResId).isEqualTo(R.string.empty_password);
+        assertThat(captor.getValue().error).isEqualTo("Mot de passe vide");
     }
 
     @Test
     public void presentPendingRequest() {
         presenter.presentPendingRequest();
         verify(view).displayViewModel(captor.capture());
-        assertThat(captor.getValue().shouldHideKeyboard).isTrue();
-        assertThat(captor.getValue().displayedChild).isEqualTo(DISPLAY_LOADING);
+        assertThat(captor.getValue().loading).isTrue();
     }
 
     @Test
     public void presentUnknownId() {
         presenter.presentUnknownId();
         verify(view).displayViewModel(captor.capture());
-        assertThat(captor.getValue().errorResId).isEqualTo(R.string.unknown_id);
-        assertThat(captor.getValue().displayedChild).isEqualTo(DISPLAY_FORM);
+        assertThat(captor.getValue().error).isEqualTo("Identifiant inconnu");
+        assertThat(captor.getValue().form).isTrue();
     }
 
     @Test
     public void presentInvalidPassword() {
         presenter.presentInvalidPassword();
         verify(view).displayViewModel(captor.capture());
-        assertThat(captor.getValue().errorResId).isEqualTo(R.string.invalid_password);
-        assertThat(captor.getValue().displayedChild).isEqualTo(DISPLAY_FORM);
+        assertThat(captor.getValue().error).isEqualTo("Mot de passe incorrect");
+        assertThat(captor.getValue().form).isTrue();
     }
 
     @Test
@@ -84,7 +80,7 @@ public class AndroidLoginPresenterTest {
         presenter.presentLoggedUser(user);
         verify(view).displayViewModel(captor.capture());
         assertThat(captor.getValue().title).isEqualTo("Bienvenue Louis CK");
-        assertThat(captor.getValue().displayedChild).isEqualTo(DISPLAY_SUCCESS);
+        assertThat(captor.getValue().logged).isTrue();
     }
 
     @Test
@@ -93,7 +89,7 @@ public class AndroidLoginPresenterTest {
         presenter.presentLoggedUser(user);
         verify(view).displayViewModel(captor.capture());
         assertThat(captor.getValue().description).isEqualTo("Dernière connexion le 1 septembre 2016");
-        assertThat(captor.getValue().displayedChild).isEqualTo(DISPLAY_SUCCESS);
+        assertThat(captor.getValue().logged).isTrue();
     }
 
     private User mockUser(String firstName, String lastName) {
