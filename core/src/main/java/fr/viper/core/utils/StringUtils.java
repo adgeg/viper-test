@@ -1,9 +1,11 @@
 package fr.viper.core.utils;
 
 public class StringUtils {
-    private static final String EMPTY = "";
+    public static boolean isEmpty(final String string) {
+        return string == null || string.length() == 0;
+    }
 
-    public static boolean isEmpty(final String string){
-        return EMPTY.equals(string);
+    public static boolean isNotEmpty(final String string) {
+        return !isEmpty(string);
     }
 }

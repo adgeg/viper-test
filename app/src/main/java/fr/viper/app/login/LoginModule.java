@@ -7,9 +7,9 @@ import fr.viper.app.login.controller.LoginController;
 import fr.viper.app.login.controller.LoginControllerDecorator;
 import fr.viper.app.login.controller.LoginControllerImpl;
 import fr.viper.core.login.LoginInteractor;
-import fr.viper.core.login.LoginPresenter;
+import fr.viper.core.login.LoginOutputPort;
 import fr.viper.core.login.LoginRepository;
-import fr.viper.login.presentation.AndroidLoginPresenter;
+import fr.viper.login.presentation.LoginPresenter;
 import fr.viper.login.presentation.LoginView;
 import fr.viper.repositories.login.FakeLoginRepository;
 import fr.viper.repositories.login.SimulateDelayLoginRepository;
@@ -24,7 +24,7 @@ public class LoginModule {
     }
 
     public LoginController getController() {
-        final LoginInteractor interactor = new LoginInteractor(getRepository(), getPresenter());
+        final LoginInteractor interactor = new LoginInteractor(getRepository(), getOutputPort());
         final LoginControllerImpl controller = new LoginControllerImpl(interactor);
         return new LoginControllerDecorator(controller, applicationModule.getAsyncExecutor());
     }
@@ -35,7 +35,7 @@ public class LoginModule {
         return new SimulateDelayLoginRepository(repository);
     }
 
-    private LoginPresenter getPresenter(){
-        return new AndroidLoginPresenter(view, applicationModule.getContext());
+    private LoginOutputPort getOutputPort() {
+        return new LoginPresenter(view, applicationModule.getContext());
     }
 }

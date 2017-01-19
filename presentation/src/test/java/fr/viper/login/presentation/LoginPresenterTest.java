@@ -25,71 +25,71 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class)
-public class AndroidLoginPresenterTest {
+public class LoginPresenterTest {
     @Rule public MockitoRule rule = MockitoJUnit.rule();
 
     @Mock private LoginView view;
     @Captor private ArgumentCaptor<LoginViewModel> captor;
-    private AndroidLoginPresenter presenter;
+    private LoginPresenter presenter;
 
     @Before
     public void setup() {
-        presenter = new AndroidLoginPresenter(view, RuntimeEnvironment.application);
+        presenter = new LoginPresenter(view, RuntimeEnvironment.application);
     }
 
     @Test
-    public void presentEmptyId() {
-        presenter.presentEmptyId();
+    public void onEmptyId() {
+        presenter.onEmptyId();
         verify(view).displayViewModel(captor.capture());
         assertThat(captor.getValue().error).isEqualTo("Identifiant vide");
     }
 
     @Test
-    public void presentEmptyPassword() {
-        presenter.presentEmptyPassword();
+    public void onEmptyPassword() {
+        presenter.onEmptyPassword();
         verify(view).displayViewModel(captor.capture());
         assertThat(captor.getValue().error).isEqualTo("Mot de passe vide");
     }
 
     @Test
-    public void presentPendingRequest() {
-        presenter.presentPendingRequest();
+    public void onPendingRequest() {
+        presenter.onPendingRequest();
         verify(view).displayViewModel(captor.capture());
-        assertThat(captor.getValue().loading).isTrue();
+        assertThat(captor.getValue().shouldDisplayLoading).isTrue();
     }
 
     @Test
-    public void presentUnknownId() {
-        presenter.presentUnknownId();
+    public void onUnknownId() {
+        presenter.onUnknownId();
         verify(view).displayViewModel(captor.capture());
         assertThat(captor.getValue().error).isEqualTo("Identifiant inconnu");
-        assertThat(captor.getValue().form).isTrue();
+        assertThat(captor.getValue().shouldDisplayForm).isTrue();
     }
 
     @Test
-    public void presentInvalidPassword() {
-        presenter.presentInvalidPassword();
+    public void onInvalidPassword() {
+        presenter.onInvalidPassword();
         verify(view).displayViewModel(captor.capture());
         assertThat(captor.getValue().error).isEqualTo("Mot de passe incorrect");
-        assertThat(captor.getValue().form).isTrue();
+        assertThat(captor.getValue().shouldDisplayForm).isTrue();
     }
 
     @Test
-    public void presentLoggedUser_ShouldDisplayHelloToUser() {
+    public void onLoggedUser_ShouldDisplayHelloToUser() {
         final User user = mockUser("Louis", "CK");
-        presenter.presentLoggedUser(user);
+        presenter.onLoggedUser(user);
         verify(view).displayViewModel(captor.capture());
         assertThat(captor.getValue().title).isEqualTo("Bienvenue Louis CK");
-        assertThat(captor.getValue().logged).isTrue();
+        assertThat(captor.getValue().shouldDisplayLoggedUser).isTrue();
     }
 
     @Test
-    public void presentLoggedUser_ShouldDisplayLastUserLoginDate() {
+    public void onLoggedUser_ShouldDisplayLastUserLoginDate() {
         final User user = mockUserWithLastLogin(2016, 8, 1);
-        presenter.presentLoggedUser(user);
+        presenter.onLoggedUser(user);
         verify(view).displayViewModel(captor.capture());
         assertThat(captor.getValue().description).isEqualTo("Dernière connexion le 1 septembre 2016");
-        assertThat(captor.getValue().logged).isTrue();
+        assertThat(captor.getValue().shouldDisplayLoggedUser).isTrue();
     }
 
     private User mockUser(String firstName, String lastName) {

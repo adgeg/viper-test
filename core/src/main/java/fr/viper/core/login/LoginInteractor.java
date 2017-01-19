@@ -5,26 +5,27 @@ import fr.viper.core.entities.User;
 import static fr.viper.core.login.LoginRepository.InvalidPasswordException;
 import static fr.viper.core.login.LoginRepository.UnknownUserException;
 import static fr.viper.core.utils.StringUtils.isEmpty;
+import static fr.viper.core.utils.StringUtils.isNotEmpty;
 
 public class LoginInteractor {
     private final LoginRepository repository;
-    private final LoginPresenter presenter;
+    private final LoginOutputPort outputPort;
 
-    public LoginInteractor(LoginRepository repository, LoginPresenter presenter) {
+    public LoginInteractor(LoginRepository repository, LoginOutputPort outputPort) {
         this.repository = repository;
-        this.presenter = presenter;
+        this.outputPort = outputPort;
     }
 
     public void login(LoginRequest request) {
-        if (credentialsAreInvalid(request)) {
-            handleInvalidCredentials(request);
-        } else {
+        if (credentialsAreValid(request)) {
             handleValidCredentials(request);
+        } else {
+            handleInvalidCredentials(request);
         }
     }
 
     private void handleValidCredentials(LoginRequest request) {
-        presenter.presentPendingRequest();
+        outputPort.onPendingRequest();
         User user = null;
         try {
             user = repository.getUser(request);
@@ -35,18 +36,18 @@ public class LoginInteractor {
         }
 
         if (loginIsSuccessful(user)) {
-            presenter.presentLoggedUser(user);
+            outputPort.onLoggedUser(user);
         }
     }
 
     private void handleInvalidPassword(InvalidPasswordException e) {
         e.printStackTrace();
-        presenter.presentInvalidPassword();
+        outputPort.onInvalidPassword();
     }
 
     private void handleUnknownUser(UnknownUserException e) {
         e.printStackTrace();
-        presenter.presentUnknownId();
+        outputPort.onUnknownId();
     }
 
     private boolean loginIsSuccessful(User user) {
@@ -55,13 +56,14 @@ public class LoginInteractor {
 
     private void handleInvalidCredentials(LoginRequest request) {
         if (isEmpty(request.getId())) {
-            presenter.presentEmptyId();
-        } else if (isEmpty(request.getPassword())) {
-            presenter.presentEmptyPassword();
+            outputPort.onEmptyId();
+        }
+        if (isEmpty(request.getPassword())) {
+            outputPort.onEmptyPassword();
         }
     }
 
-    private boolean credentialsAreInvalid(LoginRequest request) {
-        return isEmpty(request.getId()) || isEmpty(request.getPassword());
+    private boolean credentialsAreValid(LoginRequest request) {
+        return isNotEmpty(request.getId()) && isNotEmpty(request.getPassword());
     }
 }

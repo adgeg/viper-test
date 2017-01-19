@@ -5,60 +5,60 @@ import android.support.annotation.StringRes;
 import android.text.format.DateUtils;
 
 import fr.viper.core.entities.User;
-import fr.viper.core.login.LoginPresenter;
+import fr.viper.core.login.LoginOutputPort;
 
 import static android.text.format.DateUtils.formatDateTime;
 
-public class AndroidLoginPresenter implements LoginPresenter {
+public class LoginPresenter implements LoginOutputPort {
     private final LoginView view;
     private final Context context;
 
-    public AndroidLoginPresenter(LoginView view, Context context) {
+    public LoginPresenter(LoginView view, Context context) {
         this.view = view;
         this.context = context;
     }
 
     @Override
-    public void presentEmptyId() {
+    public void onEmptyId() {
         final LoginViewModel viewModel = new LoginViewModel();
         viewModel.error = getString(R.string.empty_id);
         view.displayViewModel(viewModel);
     }
 
     @Override
-    public void presentEmptyPassword() {
+    public void onEmptyPassword() {
         final LoginViewModel viewModel = new LoginViewModel();
         viewModel.error = getString(R.string.empty_password);
         view.displayViewModel(viewModel);
     }
 
     @Override
-    public void presentPendingRequest() {
+    public void onPendingRequest() {
         final LoginViewModel viewModel = new LoginViewModel();
-        viewModel.loading = true;
+        viewModel.shouldDisplayLoading = true;
         view.displayViewModel(viewModel);
     }
 
     @Override
-    public void presentUnknownId() {
+    public void onUnknownId() {
         final LoginViewModel viewModel = new LoginViewModel();
         viewModel.error = getString(R.string.unknown_id);
-        viewModel.form = true;
+        viewModel.shouldDisplayForm = true;
         view.displayViewModel(viewModel);
     }
 
     @Override
-    public void presentInvalidPassword() {
+    public void onInvalidPassword() {
         final LoginViewModel viewModel = new LoginViewModel();
         viewModel.error = getString(R.string.invalid_password);
-        viewModel.form = true;
+        viewModel.shouldDisplayForm = true;
         view.displayViewModel(viewModel);
     }
 
     @Override
-    public void presentLoggedUser(User user) {
+    public void onLoggedUser(User user) {
         final LoginViewModel viewModel = new LoginViewModel();
-        viewModel.logged = true;
+        viewModel.shouldDisplayLoggedUser = true;
         viewModel.title = getViewModelTitle(user);
         viewModel.description = getViewModelDescription(user);
         view.displayViewModel(viewModel);

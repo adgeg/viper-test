@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:useDefaultMargins="true"
-            bind:displayed="@{viewModel.form}">
+            bind:displayed="@{viewModel.shouldDisplayForm}">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -81,14 +81,15 @@
             android:layout_gravity="center"
             android:indeterminateTint="@color/colorAccent"
             android:indeterminateTintMode="src_in"
-            bind:shouldHideKeyboard="@{viewModel.loading}"
-            bind:displayed="@{viewModel.loading}"/>
+            bind:displayed="@{viewModel.shouldDisplayLoading}"
+            bind:shouldHideKeyboard="@{viewModel.shouldDisplayLoading}"
+            tools:ignore="UnusedAttribute"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            bind:displayed="@{viewModel.logged}">
+            bind:displayed="@{viewModel.shouldDisplayLoggedUser}">
 
             <TextView
                 style="@style/TextAppearance.AppCompat.Title"

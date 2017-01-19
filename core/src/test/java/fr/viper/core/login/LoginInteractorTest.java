@@ -20,7 +20,7 @@ import static org.mockito.Mockito.verify;
 @RunWith(HierarchicalContextRunner.class)
 public class LoginInteractorTest {
     @Mock private LoginRepository repository;
-    @Mock private LoginPresenter presenter;
+    @Mock private LoginOutputPort outputPort;
     @InjectMocks private LoginInteractor interactor;
 
     @Before
@@ -30,19 +30,48 @@ public class LoginInteractorTest {
 
     public class InvalidInputs {
         @Test
-        public void login_WithEmptyId() {
-            final LoginRequest request = new LoginRequest("", "");
+        public void login_WithNullId() {
+            final LoginRequest request = new LoginRequest(null, "password");
             interactor.login(request);
-            verify(presenter).presentEmptyId();
+            verify(outputPort).onEmptyId();
+        }
+
+        @Test
+        public void login_WithNullPassword() {
+            final LoginRequest request = new LoginRequest("id", null);
+            interactor.login(request);
+            verify(outputPort).onEmptyPassword();
+        }
+
+        @Test
+        public void login_WithNullIdAndPassword() {
+            final LoginRequest request = new LoginRequest(null, null);
+            interactor.login(request);
+            verify(outputPort).onEmptyId();
+            verify(outputPort).onEmptyPassword();
+        }
+
+        @Test
+        public void login_WithEmptyId() {
+            final LoginRequest request = new LoginRequest("", "password");
+            interactor.login(request);
+            verify(outputPort).onEmptyId();
         }
 
         @Test
         public void login_WithEmptyPassword() {
             final LoginRequest request = new LoginRequest("id", "");
             interactor.login(request);
-            verify(presenter).presentEmptyPassword();
+            verify(outputPort).onEmptyPassword();
         }
 
+        @Test
+        public void login_WithEmptyIdAndPassword() {
+            final LoginRequest request = new LoginRequest("", "");
+            interactor.login(request);
+            verify(outputPort).onEmptyId();
+            verify(outputPort).onEmptyPassword();
+        }
     }
 
     public class LoginFailures {
@@ -51,8 +80,8 @@ public class LoginInteractorTest {
             final LoginRequest request = new LoginRequest("id", "password");
             doThrow(UnknownUserException.class).when(repository).getUser(request);
             interactor.login(request);
-            verify(presenter).presentPendingRequest();
-            verify(presenter).presentUnknownId();
+            verify(outputPort).onPendingRequest();
+            verify(outputPort).onUnknownId();
         }
 
         @Test
@@ -60,8 +89,8 @@ public class LoginInteractorTest {
             final LoginRequest request = new LoginRequest("id", "password");
             doThrow(InvalidPasswordException.class).when(repository).getUser(request);
             interactor.login(request);
-            verify(presenter).presentPendingRequest();
-            verify(presenter).presentInvalidPassword();
+            verify(outputPort).onPendingRequest();
+            verify(outputPort).onInvalidPassword();
         }
     }
 
@@ -72,8 +101,8 @@ public class LoginInteractorTest {
             final User user = mock(User.class);
             given(repository.getUser(request)).willReturn(user);
             interactor.login(request);
-            verify(presenter).presentPendingRequest();
-            verify(presenter).presentLoggedUser(user);
+            verify(outputPort).onPendingRequest();
+            verify(outputPort).onLoggedUser(user);
         }
     }
 }
